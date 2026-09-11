@@ -1,0 +1,29 @@
+import type { PublicUser } from "../auth/service.ts";
+import { canManageUsers } from "../admin/authorization.ts";
+import { readRequestCookie, validateControlMutation } from "../control/guard.ts";
+import { CONTROL_SESSION_COOKIE } from "../control/session.ts";
+import { resolveControlSession } from "../control/session-service.ts";
+import {
+  approveStoreOrder,
+  cancelStoreOrder,
+  deleteStoreCategory,
+  deleteStorePackage,
+  saveStoreCategory,
+  saveStoreGroup,
+  saveStorePackage,
+} from "./admin-service.ts";
+import { cleanupManagedStorePackageImage } from "./package-image-http.ts";
+
+type Resolver=(raw:string|undefined,deps?:{csrfToken?:string})=>Promise<{user:PublicUser}|null>;
+const json=(status:number,body:Record<string,unknown>)=>Response.json(body,{status,headers:{"Cache-Control":"no-store"}});
+async function authorize(request:Request,resolver:Resolver){const mutation=validateControlMutation(request);if(!mutation.ok)return {response:json(mutation.status,{ok:false,error:mutation.error})};const session=await resolver(readRequestCookie(request,CONTROL_SESSION_COOKIE),{csrfToken:mutation.csrfToken});if(!session)return {response:json(401,{ok:false,error:"Phiên Control đã hết hạn."})};if(!canManageUsers(session.user.roleName))return {response:json(403,{ok:false,error:"Bạn không có quyền quản lý cửa hàng."})};return {user:session.user};}
+
+export function createStorePackageCreateHandler(deps:{resolve?:Resolver;save?:typeof saveStorePackage}={}){return async(request:Request)=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.save??saveStorePackage)(access.user,await request.json().catch(()=>null));return result.ok?json(201,{ok:true,id:result.id}):json(result.status,{ok:false,error:result.error});};}
+export function createStorePackageUpdateHandler(deps:{resolve?:Resolver;save?:typeof saveStorePackage}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.save??saveStorePackage)(access.user,await request.json().catch(()=>null),Number(context.params.id));return result.ok?json(200,{ok:true,id:result.id}):json(result.status,{ok:false,error:result.error});};}
+export function createStorePackageDeleteHandler(deps:{resolve?:Resolver;remove?:typeof deleteStorePackage;cleanupImage?:typeof cleanupManagedStorePackageImage}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.remove??deleteStorePackage)(access.user,Number(context.params.id));if(!result.ok)return json(result.status,{ok:false,error:result.error});const cleanupPending=await(deps.cleanupImage??cleanupManagedStorePackageImage)(result.imagePath);return json(200,{ok:true,cleanupPending});};}
+export function createStoreCategoryCreateHandler(deps:{resolve?:Resolver;save?:typeof saveStoreCategory}={}){return async(request:Request)=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.save??saveStoreCategory)(access.user,await request.json().catch(()=>null));return result.ok?json(201,{ok:true,id:result.id}):json(result.status,{ok:false,error:result.error});};}
+export function createStoreCategoryUpdateHandler(deps:{resolve?:Resolver;save?:typeof saveStoreCategory}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.save??saveStoreCategory)(access.user,await request.json().catch(()=>null),Number(context.params.id));return result.ok?json(200,{ok:true,id:result.id}):json(result.status,{ok:false,error:result.error});};}
+export function createStoreCategoryDeleteHandler(deps:{resolve?:Resolver;remove?:typeof deleteStoreCategory}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.remove??deleteStoreCategory)(access.user,Number(context.params.id));return result.ok?json(200,{ok:true}):json(result.status,{ok:false,error:result.error});};}
+export function createStoreGroupUpdateHandler(deps:{resolve?:Resolver;save?:typeof saveStoreGroup}={}){return async(request:Request,context:{params:{group:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.save??saveStoreGroup)(access.user,decodeURIComponent(context.params.group),await request.json().catch(()=>null));return result.ok?json(200,{ok:true,group:result.group}):json(result.status,{ok:false,error:result.error});};}
+export function createStoreOrderApproveHandler(deps:{resolve?:Resolver;approve?:typeof approveStoreOrder}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.approve??approveStoreOrder)(access.user,Number(context.params.id));return result.ok?json(200,{ok:true,deliveryId:result.deliveryId}):json(result.status,{ok:false,error:result.error});};}
+export function createStoreOrderCancelHandler(deps:{resolve?:Resolver;cancel?:typeof cancelStoreOrder}={}){return async(request:Request,context:{params:{id:string}})=>{const access=await authorize(request,deps.resolve??resolveControlSession);if("response"in access)return access.response;const result=await(deps.cancel??cancelStoreOrder)(access.user,Number(context.params.id));return result.ok?json(200,{ok:true}):json(result.status,{ok:false,error:result.error});};}

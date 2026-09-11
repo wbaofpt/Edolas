@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.edolas.telemetry.config.TelemetryConfigTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-08-13T19:58:38" hostname="QUOCBAO" time="0.008">
+  <properties/>
+  <testcase name="parsesBoundedProductionConfiguration()" classname="vn.edolas.telemetry.config.TelemetryConfigTest" time="0.002"/>
+  <testcase name="rejectsWeakKeysAndUnsafeRemoteHttp()" classname="vn.edolas.telemetry.config.TelemetryConfigTest" time="0.003"/>
+  <testcase name="derivesDeliveryEndpointForExistingConfigs()" classname="vn.edolas.telemetry.config.TelemetryConfigTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

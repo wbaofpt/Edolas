@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.edolas.telemetry.delivery.CommandDeliveryWorkerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-08-13T19:58:38" hostname="QUOCBAO" time="0.014">
+  <properties/>
+  <testcase name="claimsOneCommandThenDispatchesOnMainThreadAndCompletesOffThread()" classname="vn.edolas.telemetry.delivery.CommandDeliveryWorkerTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

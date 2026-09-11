@@ -1,0 +1,6 @@
+name: EdolasTelemetry
+version: '${version}'
+main: vn.edolas.telemetry.EdolasTelemetryPlugin
+description: Secure Paper telemetry bridge for the EdolasSG website.
+author: EdolasSG
+api-version: '1.21'

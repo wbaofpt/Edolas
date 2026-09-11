@@ -1,0 +1,12 @@
+server-id: "survival-01"
+group: "survival"
+display-name: "Survival 01"
+endpoint: "https://example.com/api/minecraft/telemetry"
+delivery-endpoint: "https://example.com/api/minecraft/deliveries"
+api-key: "replace-with-at-least-32-random-characters"
+interval-seconds: 10
+delivery-interval-seconds: 5
+connect-timeout-seconds: 5
+request-timeout-seconds: 8
+critical-plugins:
+  - "LuckPerms"

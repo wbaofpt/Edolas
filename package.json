@@ -1,0 +1,44 @@
+{
+  "name": "edolassg",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "test": "node --experimental-strip-types --test tests/*.test.mts",
+    "db:migrate:community": "node --experimental-strip-types scripts/migrate-community.mts",
+    "db:migrate:wiki-media": "node --experimental-strip-types scripts/migrate-wiki-media-readers.mts",
+    "db:migrate:admin": "node --experimental-strip-types scripts/migrate-admin-control.mts",
+    "db:migrate:control": "node --experimental-strip-types scripts/migrate-secure-control.mts",
+    "db:migrate:minecraft": "node --experimental-strip-types scripts/migrate-minecraft-telemetry.mts",
+    "db:migrate:store": "node --experimental-strip-types scripts/migrate-store.mts",
+    "db:seed:store-demo": "node --experimental-strip-types scripts/seed-store-demo.mts",
+    "minecraft:add-server": "node --experimental-strip-types scripts/add-minecraft-server.mts",
+    "db:bootstrap:owner": "node --experimental-strip-types scripts/bootstrap-owner.mts"
+  },
+  "dependencies": {
+    "framer-motion": "^11.11.9",
+    "lucide-react": "^0.452.0",
+    "mysql2": "^3.11.3",
+    "next": "^14.2.16",
+    "nodemailer": "^9.0.5",
+    "qrcode.react": "^4.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/nodemailer": "^8.0.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.16",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="vn.edolas.telemetry.collector.PaperSnapshotCollectorTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-08-13T19:58:38" hostname="QUOCBAO" time="0.071">
+  <properties/>
+  <testcase name="collectsAnImmutableSchemaV1SnapshotFromTheServerView()" classname="vn.edolas.telemetry.collector.PaperSnapshotCollectorTest" time="0.014"/>
+  <testcase name="preservesTheRealOnlineCountWhenThePlayerDirectoryIsTruncated()" classname="vn.edolas.telemetry.collector.PaperSnapshotCollectorTest" time="0.032"/>
+  <testcase name="bukkitViewReadsTheGlobalOnlinePlayerCollection()" classname="vn.edolas.telemetry.collector.PaperSnapshotCollectorTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
